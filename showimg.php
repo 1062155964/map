@@ -8,7 +8,7 @@
 		$i = 0;
 //		$root = dirname(__FILE__); 
 		$id_str = explode('|', $id);
-		$sql = "SELECT * FROM map_picture WHERE faid = '$id_str[0]' and pictureid = '$id_str[1]' ORDER BY id ASC ";
+		$sql = "SELECT * FROM map_picture WHERE faid = '$id_str[0]' and pictureid = '$id_str[1]' ORDER BY id ASC";
 		$result = $conn->query($sql);
 		if($result->num_rows>0){
 			while($row = $result->fetch_assoc()){

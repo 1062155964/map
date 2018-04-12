@@ -10,7 +10,7 @@
 	$result = $conn->query($sql);
 	if($result->num_rows>0){
 		while($row = $result->fetch_assoc()){
-			$path = $root.'/upload'.$row["picture"];
+			$path = $root.'/upload/'.$row["picture"];
 			if(file_exists($path)==true){
 				@unlink($path);
 			}else{

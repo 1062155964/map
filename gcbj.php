@@ -1,4 +1,5 @@
-<?php
+<?php	
+		error_reporting( E_ALL&~E_NOTICE ); //屏蔽警告,处理Notice：Undefined offset：1 问题
 		require("conn.php");
 		$id = $_POST["id"];
 		$flag = $_POST["flag"];
@@ -42,6 +43,31 @@
 				$ret_data[]='nodata';
 			}
 			
+		}else if($flag=='gcfw'){
+			$sql = "SELECT * from map WHERE id = '$id'";
+			$result =$conn->query($sql);
+			if($result->num_rows>0){
+				while($row = $result->fetch_assoc()){
+					$ret_data[0]["swlng"] = $row["swlng"];
+					$ret_data[0]["nelng"] = $row["nelng"];
+					$ret_data[0]["swlat"] = $row["swlat"];
+					$ret_data[0]["nelat"] = $row["nelat"];
+				}
+			}
+		}else if($flag=='sign'){
+			$map_data =$_POST["map_data"];
+			$arr_length = count($map_data);
+			if($arr_length>0){
+				for($i=0;$i<$arr_length;$i++){
+					$li = $id.'|'.$i;
+					$str = explode(',', $map_data[$i]);
+					$sql = "INSERT INTO son_map (plng,plat,faid,li) VALUES ('$str[0]','$str[1]','$id','$li');";
+					$result = $conn->query($sql);
+				}
+				$ret_data[]='success';
+			}else{
+				$ret_data[]='nodata';
+			}
 		}
 		$json = json_encode($ret_data);
 		echo $json;
